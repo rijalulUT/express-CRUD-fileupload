@@ -37,6 +37,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 //post routes
 require("./app/routes/post.routes")(app)
+require("./app/routes/user.routes")(app)
 
 //set port, listen for request
 const PORT = process.env.PORT || 8080

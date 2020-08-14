@@ -23,7 +23,7 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 // create table
-db.posts = require("./post.model")
-(sequelize,Sequelize)
+db.posts = require("./post.model")(sequelize,Sequelize)
+db.users = require("./user.model")(sequelize,Sequelize)
 
 module.exports = db
