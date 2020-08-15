@@ -1,7 +1,20 @@
 const db = require("../models/index")
-
 const Post = db.posts
+const Op = db.Sequelize.Op
 
+exports.findAll = (req,res) =>{
+    const title = req.query.title
+    let condition = title ? {title : { [Op.like]: `%${title}%` }} : null
+
+    Post.findAll({ where : condition})
+        .then((data)=> {
+            res.send(data)
+        }).catch((err)=> {
+            res.status(500).send({
+                message : err.message || "some error occured"
+            })
+        })
+}
 //post
 exports.create = (req, res) =>{
     //Validate request
