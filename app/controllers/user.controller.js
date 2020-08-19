@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken')
 var bcrypt = require('bcrypt')
-
+//const process = require("dotenv")
 const db = require('../models/index')
 const User = db.users
 
@@ -44,10 +44,11 @@ exports.signin = function (req, res){
     User.findOne({where : {email: email}})
         .then((data)=> {
             var hasil = bcrypt.compareSync(pass, data.password)
-            console.log(hasil)
+            //console.log(hasil)
 
             if (hasil == true) {
-                var secret = 'TEXT SECRET LETAKAN DI ENV'
+                var secret = process.env.SECRET
+                //console.log(secret)
                 //var now    = Math.floor(Date.now() /  1000)
                 //var iat    = (now - 10)
 

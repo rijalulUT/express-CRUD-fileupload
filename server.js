@@ -3,7 +3,9 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const morgan = require("morgan")
 const fileUpload = require("express-fileupload")
-
+const cron = require("node-cron")
+const nodemailer = require("nodemailer")
+require('dotenv').config()
 
 //Models 
 const db = require("./app/models/index")
@@ -38,6 +40,17 @@ app.use(bodyParser.urlencoded({extended:true}))
 //post routes
 require("./app/routes/post.routes")(app)
 require("./app/routes/user.routes")(app)
+
+//schedule task
+var task = cron.schedule("* * * * *", function() {
+    // * * * * * -> Jalan per menit apabila * nya ada 5
+    console.log("ini jalan setiap menit")
+    
+    //untuk memanggil cron email tiap menit
+    // require("./app/cron/cron")
+    // (nodemailer).then(console.log('success send email'))
+})
+task.start
 
 //set port, listen for request
 const PORT = process.env.PORT || 8080

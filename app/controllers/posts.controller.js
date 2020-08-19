@@ -1,7 +1,7 @@
 const db = require("../models/index")
 const Post = db.posts
 const Op = db.Sequelize.Op
-
+const jwt = require("jsonwebtoken")
 exports.findAll = (req,res) =>{
     const title = req.query.title
     let condition = title ? {title : { [Op.like]: `%${title}%` }} : null
@@ -17,6 +17,8 @@ exports.findAll = (req,res) =>{
 }
 //post
 exports.create = (req, res) =>{
+    var user = (jwt.verify(req.headers.token,process.env.SECRET))
+    console.log(`user ${user.id}`)
     //Validate request
     if (!req.body.title) {
         res.status(400).send(
