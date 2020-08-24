@@ -2,6 +2,7 @@ const db = require("../models/index")
 const Post = db.posts
 const Op = db.Sequelize.Op
 const jwt = require("jsonwebtoken")
+const slack = require("../slack/test_thirdparty.slack")
 exports.findAll = (req,res) =>{
     const title = req.query.title
     let condition = title ? {title : { [Op.like]: `%${title}%` }} : null
@@ -44,6 +45,7 @@ exports.create = (req, res) =>{
                 message: err.message || "some error occured while creating Post"
             })
         })
+        slack.sendMessage("Laras","test_thirdparty",post.title)
 }
 
 exports.UploadImagePost = async (req,res) =>{

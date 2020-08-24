@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt')
 //const process = require("dotenv")
 const db = require('../models/index')
 const User = db.users
-
+const Order = db.order
 //register
 exports.signup = function (req,res) {
     //Validate Request
@@ -111,3 +111,23 @@ exports.signin = function (req, res){
             })
         })
 }
+
+//Query cari data userId
+exports.findOrderByUserId = function (req, res) {
+    console.log(req.params.userId)
+    User.findByPk(req.params.userId, {   
+                        attributes: ['id','email','firstname'],
+                        include: [{
+                                    model: Order,
+                                    attributes:['id','quantity','total']
+                                }] 
+                 }) //harus = index.js
+        .then((data) => {
+            res.send(data);
+        //response.ok(data,res)
+        })
+        .catch((err) => {
+            console.log(">> Error while finding tutorial: ", err);
+    });
+};
+

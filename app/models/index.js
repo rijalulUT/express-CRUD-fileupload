@@ -25,5 +25,13 @@ db.sequelize = sequelize
 // create table
 db.posts = require("./post.model")(sequelize,Sequelize)
 db.users = require("./user.model")(sequelize,Sequelize)
+db.order = require("./order.model")(sequelize,Sequelize)
+
+//relation tabel User - Order
+db.users.hasMany(db.order);
+
+db.order.belongsTo(db.users, { 
+    foreignKey: "userId"
+});
 
 module.exports = db

@@ -7,5 +7,7 @@ module.exports = app => {
     router.post("/signup",users.signup)
     router.post("/signin",users.signin)
 
+    router.get("/order/:userId", users.findOrderByUserId );
+
     app.use("/api/users",router)
 }
